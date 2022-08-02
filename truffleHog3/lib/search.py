@@ -40,18 +40,18 @@ class Engine(ABC):
         issue = meta.copy()
         lines = issue.pop("data").splitlines()
         found = defaultdict(set)
-
+         
+        i=0;
         for line in lines:
             line = line.strip()
             for reason, match in self.search(line):
                 if self.should_skip(match, line, issue["path"]):
                     continue
                 found[reason].add(line)
-
-        return [
-            dict(issue, reason=k, stringsFound=list(found[k])) for k in found
-        ]
-
+            i=i+1;
+        out = [ dict( issue, line=i, reason=k, stringsFound=list(found[k]))  for k in found]
+        return out
+    
     def should_skip(self, match: str, line: str, path: str = "") -> bool:
         exclude = self.skip.get("/", [])
         if path in self.skip:
