@@ -41,15 +41,16 @@ class Engine(ABC):
         lines = issue.pop("data").splitlines()
         found = defaultdict(set)
          
-        i=0;
+        i=0; y=0;
         for line in lines:
             line = line.strip()
             for reason, match in self.search(line):
                 if self.should_skip(match, line, issue["path"]):
                     continue
                 found[reason].add(line)
+                y=i
             i=i+1;
-        out = [ dict( issue, line=i, reason=k, stringsFound=list(found[k]))  for k in found]
+        out = [ dict( issue, line=y, reason=k, stringsFound=list(found[k]))  for k in found]
         return out
     
     def should_skip(self, match: str, line: str, path: str = "") -> bool:
