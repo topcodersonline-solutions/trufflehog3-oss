@@ -41,7 +41,7 @@ class Engine(ABC):
         lines = issue.pop("data").splitlines()
         found = defaultdict(set)
          
-        i=0; y=0;
+        i=1; y=0;
         for line in lines:
             line = line.strip()
             for reason, match in self.search(line):
