@@ -64,6 +64,7 @@ class Engine(ABC):
           z=z+1
 
 
+        out = [i[0] for i in out]
         return out
     
     def should_skip(self, match: str, line: str, path: str = "") -> bool:
