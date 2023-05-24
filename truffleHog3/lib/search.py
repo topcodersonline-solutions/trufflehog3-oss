@@ -42,6 +42,9 @@ class Engine(ABC):
         found = defaultdict(set)
          
         i=1; y=0;
+        f=0;
+        out = []
+        l = []
         for line in lines:
             line = line.strip()
             for reason, match in self.search(line):
@@ -49,8 +52,18 @@ class Engine(ABC):
                     continue
                 found[reason].add(line)
                 y=i
+                l.append(i)
+                f=f+1
+
             i=i+1;
-        out = [ dict( issue, line=y, reason=k, stringsFound=list(found[k]))  for k in found]
+        z=0
+        for item in found:
+          out.append([ dict( issue, line=l[z], reason=item)])
+
+
+          z=z+1
+
+
         return out
     
     def should_skip(self, match: str, line: str, path: str = "") -> bool:
